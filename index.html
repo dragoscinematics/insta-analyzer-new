@@ -19,6 +19,12 @@
     });
   </script>
 
+  <!-- Google AdSense loader -->
+  <script async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5094319627936586"
+          crossorigin="anonymous">
+  </script>
+
   <!-- JSZip via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
@@ -151,8 +157,8 @@
           a.href        = `https://instagram.com/${u}`;
           a.target      = '_blank';
           a.className   = 'block w-full';
-          li.appendChild(a);
           ul.appendChild(li);
+          li.appendChild(a);
         });
       }
       badge.textContent = arr.length;
@@ -198,7 +204,8 @@
         const following = new Set(extract(html2));
 
         render([...following].filter(u => !followers.has(u)), list1, count1);
-        render([...followers].filter(u => !following.has(u)), list2, count2);
+        render([...followers].filter(u => !
+followers.has(u)), list2, count2);
       } catch {
         alert('Error reading that ZIP.');
       } finally {
