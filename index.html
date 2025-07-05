@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Instagram Follow Analyzer</title>
+  <title>Instagram Follower Analyzer</title>
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,14 +15,12 @@
     gtag('js', new Date());
     gtag('config','G-PVWHZ1JWVR',{page_path: location.pathname});
   </script>
-  <!-- Google AdSense loader -->
+  <!-- Google AdSense -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5094319627936586"
-    crossorigin="anonymous">
-  </script>
+    crossorigin="anonymous"></script>
   <!-- JSZip -->
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-
   <style>
     :root { --insta-from:#f58529; }
     @keyframes instaFlash{0%,100%{box-shadow:0}50%{box-shadow:0 0 20px 5px var(--insta-from)}}
@@ -37,27 +35,38 @@
 </head>
 <body class="min-h-screen bg-gray-900 flex flex-col">
 
+  <!-- HEADER -->
   <header class="bg-white/10 text-white p-4 text-center">
-    <h1 class="text-3xl font-bold">Instagram Follow Analyzer</h1>
+    <h1 class="text-3xl font-bold">Instagram Follower Analyzer</h1>
   </header>
 
   <main class="flex-grow p-6 flex md:items-center md:justify-center overflow-auto">
     <div id="card" class="relative w-full max-w-4xl bg-gradient-to-br from-purple-600 to-blue-500
                          rounded-3xl shadow-2xl p-8 space-y-8 overflow-hidden">
 
+      <!-- LOADING -->
       <div id="loading" class="absolute inset-0 bg-black/60 hidden flex items-center justify-center z-20">
         <div class="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
 
+      <!-- UPDATED INSTRUCTIONS -->
       <section class="bg-white rounded-lg p-6 text-gray-800">
-        <h2 class="text-xl font-semibold mb-2">How to get your Instagram ZIP</h2>
+        <h2 class="text-xl font-semibold mb-2">How to export your Instagram data</h2>
         <ol class="list-decimal list-inside space-y-1 text-sm">
-          <li>Open Instagram app → ☰ → Settings → Security → Download Data.</li>
-          <li>Select <strong>Followers &amp; Following</strong>, date range <strong>All time</strong>, enter email, tap “Request Download.”</li>
-          <li>Wait for the email (up to 48 hrs), download the ZIP to your device.</li>
+          <li>Open Instagram → tap the ☰ icon (three vertical bars).</li>
+          <li>Go to <strong>Accounts Center</strong> → <em>Your information and permissions</em>.</li>
+          <li>Select <strong>Download your information</strong> (or “Download or transfer information”).</li>
+          <li>Under “Some of your information,” choose <strong>Search for followers and following</strong>.</li>
+          <li>Tap <strong>Download to device</strong>.</li>
+          <li>Set <strong>Date range:</strong> All time</li>
+          <li>Choose <strong>Format:</strong> HTML</li>
+          <li>Set <strong>Media Quality:</strong> Medium</li>
+          <li>Tap <strong>Create file</strong> then wait for the ZIP email to arrive.</li>
+          <li>Download the full ZIP and upload it below.</li>
         </ol>
       </section>
 
+      <!-- UPLOAD -->
       <div class="flex justify-center">
         <label id="zipLabel" class="relative inline-block bg-white text-purple-700 font-semibold rounded-full cursor-pointer">
           <span class="px-8 py-4 block">Choose ZIP</span>
@@ -66,6 +75,7 @@
         </label>
       </div>
 
+      <!-- PANELS -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Panel 1 -->
         <section class="bg-white rounded-2xl p-4 text-gray-800 overflow-hidden">
@@ -118,7 +128,6 @@
           showAll1 = document.getElementById('showAll1'),
           showAll2 = document.getElementById('showAll2');
 
-    // Render function now tracks visible count
     function render(arr, ul, badge, showAllBtn) {
       ul.innerHTML = '';
       if (!arr.length) {
@@ -135,15 +144,11 @@
         a.target = '_blank';
         a.className = 'block w-full';
         li.appendChild(a);
-
-        // On click, hide and decrement badge
         li.addEventListener('click', () => {
           li.style.display = 'none';
-          const newCount = parseInt(badge.textContent) - 1;
-          badge.textContent = newCount;
+          badge.textContent = parseInt(badge.textContent) - 1;
           showAllBtn.classList.remove('hidden');
         });
-
         ul.appendChild(li);
       });
       badge.textContent = arr.length;
@@ -162,7 +167,6 @@
 
     showAll1.addEventListener('click', () => {
       Array.from(list1.children).forEach(li => li.style.display = '');
-      // reset to original count
       count1.textContent = list1.children.length;
       showAll1.classList.add('hidden');
     });
@@ -189,17 +193,14 @@
         const fhtml = await zip.file('connections/followers_and_following/followers_1.html')?.async('string');
         const ghml = await zip.file('connections/followers_and_following/following.html')?.async('string');
         if (!fhtml || !ghml) throw new Error();
-
         const parser = new DOMParser();
         const extract = html => Array.from(
-          parser.parseFromString(html, 'text/html').querySelectorAll('a')
-        ).map(a => a.textContent.trim()).filter(Boolean);
-
-        const followers = new Set(extract(fhtml));
-        const following = new Set(extract(ghml));
-
-        render([...following].filter(u => !followers.has(u)), list1, count1, showAll1);
-        render([...followers].filter(u => !following.has(u)), list2, count2, showAll2);
+          parser.parseFromString(html,'text/html').querySelectorAll('a')
+        ).map(a=>a.textContent.trim()).filter(Boolean);
+        const followers = new Set(extract(fhtml)),
+              following = new Set(extract(ghml));
+        render([...following].filter(u=>!followers.has(u)), list1, count1, showAll1);
+        render([...followers].filter(u=>!following.has(u)), list2, count2, showAll2);
       } catch {
         alert('Error reading that ZIP.');
       } finally {
