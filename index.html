@@ -1,22 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-50">
+<html lang="en" class="min-h-screen bg-gray-50">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Instagram Follower Analyzer – See Who Doesn’t Follow You Back</title>
+  <title>Who Follows Me on Instagram? • Instagram Follower Analyzer</title>
   <meta name="description"
-        content="Upload your Instagram data ZIP and instantly discover who doesn’t follow you back, who you don’t follow, and your mutuals—all for free and in seconds.">
+        content="Upload your Instagram data ZIP and instantly discover who follows you, who doesn’t follow back, and your mutuals—100% in your browser, free and secure.">
   <link rel="canonical" href="https://whofollowsme.com/"/>
 
-  <!-- Google tag (gtag.js) -->
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website"/>
+  <meta property="og:title"       content="Who Follows Me on Instagram? • Instagram Follower Analyzer"/>
+  <meta property="og:description" content="Upload your Instagram data ZIP and instantly discover who follows you, who doesn’t follow back, and your mutuals—free, in-browser."/>
+  <meta property="og:url"         content="https://whofollowsme.com/"/>
+  <meta property="og:image"       content="https://whofollowsme.com/preview.png"/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:title"       content="Instagram Follower Analyzer"/>
+  <meta name="twitter:description" content="Free in-browser tool to see exactly who follows you on Instagram and who doesn’t follow back."/>
+  <meta name="twitter:image"       content="https://whofollowsme.com/preview.png"/>
+
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PVWHZ1JWVR"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-PVWHZ1JWVR', {
-      page_path: window.location.pathname,
-    });
+    gtag('config', 'G-PVWHZ1JWVR', { page_path: window.location.pathname });
   </script>
 
   <!-- Google AdSense -->
@@ -24,31 +37,103 @@
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5094319627936586"
           crossorigin="anonymous"></script>
 
-  <!-- Tailwind -->
+  <!-- FAQ & HowTo Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "FAQPage",
+        "@id": "https://whofollowsme.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Who follows me on Instagram?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Upload your Instagram data ZIP and our tool parses your followers list so you can instantly see exactly who follows you."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does this tool store my data?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No—everything runs 100% in your browser. We never send, store, or capture any of your Instagram data on our servers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I download my Instagram data?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In the Instagram app tap ☰ → Settings → Security → Download Data. Select 'Followers & Following,' choose 'All time,' enter your email, and request the download."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "@id": "https://whofollowsme.com/#how-to",
+        "name": "How to get your Instagram data ZIP",
+        "description": "Step-by-step on requesting your Instagram followers & following data from the mobile app",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "url": "https://whofollowsme.com/#step1",
+            "name": "Open the Instagram app and go to Settings → Security → Download Data",
+            "itemListElement": {
+              "@type": "HowToDirection",
+              "text": "Tap Download Data and select 'Followers & Following'"
+            }
+          },
+          {
+            "@type": "HowToStep",
+            "url": "https://whofollowsme.com/#step2",
+            "name": "Choose 'All time' and enter your email",
+            "itemListElement": {
+              "@type": "HowToDirection",
+              "text": "Tap Request Download"
+            }
+          },
+          {
+            "@type": "HowToStep",
+            "url": "https://whofollowsme.com/#step3",
+            "name": "Wait for the email and download the ZIP",
+            "itemListElement": {
+              "@type": "HowToDirection",
+              "text": "Upload the ZIP here to analyze"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Tailwind CSS, Feather Icons, JSZip -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Feather Icons -->
   <script src="https://unpkg.com/feather-icons"></script>
-  <!-- JSZip -->
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
   <style>
-    @keyframes pop { 0%,100%{transform:scale(1)}50%{transform:scale(1.1)} }
+    @keyframes pop { 0%,100% { transform: scale(1) } 50% { transform: scale(1.1) } }
     .pop-anim { animation: pop .2s ease-out forwards; }
   </style>
 </head>
-<body class="flex flex-col h-full">
+<body class="flex flex-col min-h-screen">
 
   <!-- HEADER -->
-  <header class="bg-gradient-to-r from-pink-500 to-yellow-400 text-white p-6 shadow-md flex items-center justify-center">
+  <header class="sticky top-0 bg-gradient-to-r from-pink-500 to-yellow-400 text-white p-6 shadow-md flex items-center justify-center z-20">
     <i data-feather="bar-chart-2" class="w-8 h-8 mr-2"></i>
     <h1 class="text-2xl font-bold">Instagram Follower Analyzer</h1>
   </header>
 
-  <!-- MAIN CARD -->
-  <main class="flex-1 flex items-center justify-center p-6">
-    <div id="card" class="w-full max-w-3xl bg-white rounded-2xl shadow-xl overflow-hidden">
+  <!-- MAIN -->
+  <main class="flex-1 p-6 overflow-auto">
+    <div class="mx-auto w-full max-w-3xl bg-white rounded-2xl shadow-xl overflow-hidden">
 
-      <!-- STATS RIBBON -->
+      <!-- STATS -->
       <div class="grid grid-cols-3 bg-gray-100 text-center">
         <div class="p-4 border-r">
           <div id="totalFollowers" class="text-lg font-semibold">0</div>
@@ -82,89 +167,182 @@
         </nav>
       </div>
 
-      <!-- TAB CONTENTS -->
+      <!-- PANEL CONTENTS -->
       <div class="p-6 space-y-6">
-
-        <!-- DROPZONE -->
-        <div id="dropzone"
-             class="relative border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:border-indigo-400 transition-colors cursor-pointer">
+        <!-- Upload + Filter -->
+        <div id="dropzone" class="relative border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:border-indigo-400 transition-colors cursor-pointer">
           <p class="text-gray-500 mb-4">Drag &amp; drop your ZIP here</p>
-          <button id="zipLabel"
-                  class="bg-indigo-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-indigo-600 transition-colors">
+          <button id="zipLabel" class="bg-indigo-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-indigo-600 transition-colors">
             Browse ZIP
           </button>
-          <input type="file" accept=".zip" id="zipInput"
-                 class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
+          <input type="file" accept=".zip" id="zipInput" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
         </div>
+        <input id="filter" placeholder="Search usernames…" class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
 
-        <!-- FILTER -->
-        <input id="filter"
-               placeholder="Search usernames…"
-               class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
-
-        <!-- PANEL: They Don’t Follow You -->
+        <!-- They Don’t Follow You -->
         <div id="onlyYou" class="tab-content space-y-2">
-          <button id="showAllOnlyYou" class="hidden mb-2 text-sm text-indigo-600">
-            Show All
-          </button>
+          <div class="flex justify-between items-center">
+            <h2 class="font-semibold">They Don’t Follow You</h2>
+            <span id="countOnlyYou" class="bg-indigo-500 text-white px-2 py-0.5 rounded-full text-sm">0</span>
+          </div>
+          <button id="showAllOnlyYou" class="hidden mb-2 text-sm text-indigo-600">Show All</button>
           <ul id="listOnlyYou" class="max-h-64 overflow-y-auto space-y-1"></ul>
         </div>
 
-        <!-- PANEL: You Don’t Follow Back -->
+        <!-- You Don’t Follow Back -->
         <div id="onlyThey" class="tab-content hidden space-y-2">
+          <div class="flex justify-between items-center">
+            <h2 class="font-semibold">You Don’t Follow Back</h2>
+            <span id="countOnlyThey" class="bg-indigo-500 text-white px-2 py-0.5 rounded-full text-sm">0</span>
+          </div>
           <ul id="listOnlyThey" class="max-h-64 overflow-y-auto space-y-1"></ul>
         </div>
 
-        <!-- PANEL: Mutuals -->
+        <!-- Mutuals -->
         <div id="mutuals" class="tab-content hidden space-y-2">
+          <div class="flex justify-between items-center">
+            <h2 class="font-semibold">Mutuals</h2>
+            <span id="countMutuals" class="bg-indigo-500 text-white px-2 py-0.5 rounded-full text-sm">0</span>
+          </div>
           <ul id="listMutuals" class="max-h-64 overflow-y-auto space-y-1"></ul>
         </div>
-
       </div>
     </div>
   </main>
+
+  <!-- FAQ & Privacy -->
+  <section class="bg-white rounded-lg shadow-md max-w-3xl mx-auto p-6 mb-8">
+    <h2 id="faq" class="text-xl font-semibold mb-4">FAQs</h2>
+    <div class="space-y-4">
+      <div>
+        <h3 class="font-medium">Who follows me on Instagram?</h3>
+        <p class="text-gray-700">
+          Upload your Instagram data ZIP and our tool parses your followers list 
+          so you can instantly see exactly who follows you.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-medium">Does this tool store my data?</h3>
+        <p class="text-gray-700">
+          No—everything runs <strong>100% in your browser</strong>. We never send, store, 
+          or capture any of your Instagram data on our servers.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-medium">How do I download my Instagram data?</h3>
+        <p class="text-gray-700">
+          In the Instagram app tap ☰ → Settings → Security → Download Data.  
+          Select “Followers &amp; Following,” choose “All time,” enter your email,  
+          and request the download. Once you get the ZIP by email, upload it here.
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer class="bg-gray-100 text-gray-500 text-sm text-center p-4">
     Made with ❤️ by You
   </footer>
 
-  <!-- SCRIPT -->
   <script>
     feather.replace();
 
-    // Element refs
-    const zipInput       = document.getElementById('zipInput'),
-          zipLabel       = document.getElementById('zipLabel'),
-          dropzone       = document.getElementById('dropzone'),
-          filterInput    = document.getElementById('filter'),
-          listOnlyYou    = document.getElementById('listOnlyYou'),
-          listOnlyThey   = document.getElementById('listOnlyThey'),
-          listMutuals    = document.getElementById('listMutuals'),
-          totalF         = document.getElementById('totalFollowers'),
-          totalG         = document.getElementById('totalFollowing'),
-          ratioEl        = document.getElementById('ratio'),
-          showAllYouBtn  = document.getElementById('showAllOnlyYou');
+    // Refs
+    const zipInput      = document.getElementById('zipInput'),
+          zipLabel      = document.getElementById('zipLabel'),
+          dropzone      = document.getElementById('dropzone'),
+          filterInput   = document.getElementById('filter'),
+          listOnlyYou   = document.getElementById('listOnlyYou'),
+          listOnlyThey  = document.getElementById('listOnlyThey'),
+          listMutuals   = document.getElementById('listMutuals'),
+          showAllYouBtn = document.getElementById('showAllOnlyYou'),
+          countOnlyYou  = document.getElementById('countOnlyYou'),
+          countOnlyThey = document.getElementById('countOnlyThey'),
+          countMutuals  = document.getElementById('countMutuals'),
+          totalF        = document.getElementById('totalFollowers'),
+          totalG        = document.getElementById('totalFollowing'),
+          ratioEl       = document.getElementById('ratio');
 
-    // Store originals
     let origOnlyYou = [];
 
-    // — Tabs logic —
+    function updateCount(badge, ul) {
+      badge.textContent = ul.querySelectorAll('li').length;
+    }
+
+    function renderRemovable(arr, ul, btn, badge) {
+      ul.innerHTML = '';
+      if (!arr.length) {
+        ul.innerHTML = '<li class="italic text-gray-400">None</li>';
+        badge.textContent = 0;
+        btn.classList.add('hidden');
+        return;
+      }
+      arr.forEach(u => {
+        const url = `https://instagram.com/${u}`,
+              li  = document.createElement('li');
+        li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center cursor-pointer';
+        li.textContent = u;
+        li.addEventListener('click', () => {
+          window.open(url, '_blank');
+          li.remove();
+          updateCount(badge, ul);
+          if (ul.children.length < arr.length) btn.classList.remove('hidden');
+        });
+        ul.appendChild(li);
+      });
+      updateCount(badge, ul);
+      btn.classList.add('hidden');
+    }
+
+    function renderStatic(arr, ul, badge) {
+      ul.innerHTML = '';
+      if (!arr.length) {
+        ul.innerHTML = '<li class="italic text-gray-400">None</li>';
+        badge.textContent = 0;
+        return;
+      }
+      arr.forEach(u => {
+        const url = `https://instagram.com/${u}`,
+              li  = document.createElement('li');
+        li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center cursor-pointer';
+        li.textContent = u;
+        li.addEventListener('click', () => window.open(url, '_blank'));
+        ul.appendChild(li);
+      });
+      updateCount(badge, ul);
+    }
+
+    showAllYouBtn.addEventListener('click', () => {
+      renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn, countOnlyYou);
+      filterInput.dispatchEvent(new Event('input'));
+    });
+
+    filterInput.addEventListener('input', () => {
+      const term = filterInput.value.toLowerCase();
+      [listOnlyYou, listOnlyThey, listMutuals].forEach(ul => {
+        ul.querySelectorAll('li').forEach(li => {
+          li.style.display = li.textContent.toLowerCase().includes(term) ? '' : 'none';
+        });
+      });
+      updateCount(countOnlyYou, listOnlyYou);
+      updateCount(countOnlyThey, listOnlyThey);
+      updateCount(countMutuals, listMutuals);
+    });
+
+    // Tabs
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-btn')
           .forEach(b => b.classList.remove('text-indigo-600','border-indigo-600'));
         btn.classList.add('text-indigo-600','border-indigo-600');
-        document.querySelectorAll('.tab-content')
-          .forEach(c => c.classList.add('hidden'));
-        document.getElementById(btn.dataset.tab)
-          .classList.remove('hidden');
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+        document.getElementById(btn.dataset.tab).classList.remove('hidden');
         filterInput.dispatchEvent(new Event('input'));
       });
     });
     document.querySelector('.tab-btn').click();
 
-    // — Drag & Drop styling —
+    // Drag & drop styling
     ['dragenter','dragover'].forEach(e =>
       dropzone.addEventListener(e, ev => { ev.preventDefault(); dropzone.classList.add('border-indigo-400'); })
     );
@@ -176,98 +354,31 @@
       zipInput.dispatchEvent(new Event('change'));
     });
 
-    // — Render "They Don’t Follow You" (removable) —
-    function renderRemovable(arr, ul, showAllBtn) {
-      ul.innerHTML = '';
-      if (!arr.length) {
-        ul.innerHTML = '<li class="text-gray-400 italic">None</li>';
-        showAllBtn.classList.add('hidden');
-        return;
-      }
-      arr.forEach(u => {
-        const url = `https://instagram.com/${u}`;
-        const li = document.createElement('li');
-        li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center cursor-pointer';
-        li.textContent = u;
-        li.addEventListener('click', () => {
-          window.open(url, '_blank');
-          li.remove();
-          if (ul.children.length < arr.length) {
-            showAllBtn.classList.remove('hidden');
-          }
-        });
-        ul.appendChild(li);
-      });
-      showAllBtn.classList.add('hidden');
-    }
-
-    // — Render static lists (open only) —
-    function renderStatic(arr, ul) {
-      ul.innerHTML = '';
-      if (!arr.length) {
-        ul.innerHTML = '<li class="text-gray-400 italic">None</li>';
-        return;
-      }
-      arr.forEach(u => {
-        const url = `https://instagram.com/${u}`;
-        const li = document.createElement('li');
-        li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center cursor-pointer';
-        li.textContent = u;
-        li.addEventListener('click', () => {
-          window.open(url, '_blank');
-        });
-        ul.appendChild(li);
-      });
-    }
-
-    // — Show All handler —
-    showAllYouBtn.addEventListener('click', () => {
-      renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn);
-      filterInput.dispatchEvent(new Event('input'));
-    });
-
-    // — Filter all lists —
-    filterInput.addEventListener('input', () => {
-      const term = filterInput.value.toLowerCase();
-      [listOnlyYou, listOnlyThey, listMutuals].forEach(ul => {
-        ul.querySelectorAll('li').forEach(li => {
-          li.style.display = li.textContent.toLowerCase().includes(term) ? '' : 'none';
-        });
-      });
-    });
-
-    // — ZIP processing —
+    // ZIP processing
     zipInput.addEventListener('change', async () => {
       const file = zipInput.files[0];
-      if (!file || !file.name.endsWith('.zip')) {
-        return alert('Please select a valid Instagram ZIP.');
-      }
+      if (!file || !file.name.endsWith('.zip')) return alert('Please select a valid Instagram ZIP.');
       dropzone.classList.add('opacity-50');
       zipLabel.classList.add('pop-anim');
       try {
-        const zip = await JSZip.loadAsync(file);
-        const f1  = await zip.file('connections/followers_and_following/followers_1.html').async('string');
-        const f2  = await zip.file('connections/followers_and_following/following.html').async('string');
-        const parser = new DOMParser();
-        const extract = html => Array.from(
-          parser.parseFromString(html,'text/html').querySelectorAll('a')
-        ).map(a => a.textContent.trim()).filter(Boolean);
+        const zip    = await JSZip.loadAsync(file),
+              html1  = await zip.file('connections/followers_and_following/followers_1.html').async('string'),
+              html2  = await zip.file('connections/followers_and_following/following.html').async('string'),
+              parser = new DOMParser(),
+              extract= html => Array.from(parser.parseFromString(html,'text/html').querySelectorAll('a')).map(a=>a.textContent.trim()).filter(Boolean);
 
-        const followers = new Set(extract(f1)),
-              following = new Set(extract(f2)),
+        const followers = new Set(extract(html1)),
+              following = new Set(extract(html2)),
               onlyYou   = [...following].filter(u => !followers.has(u)),
               onlyThey  = [...followers].filter(u => !following.has(u)),
               mutuals   = [...followers].filter(u => following.has(u));
 
-        // store original for removable list
         origOnlyYou = onlyYou.slice();
 
-        // render panels
-        renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn);
-        renderStatic(onlyThey,         listOnlyThey);
-        renderStatic(mutuals,          listMutuals);
+        renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn, countOnlyYou);
+        renderStatic(onlyThey,       listOnlyThey, countOnlyThey);
+        renderStatic(mutuals,        listMutuals,  countMutuals);
 
-        // update stats
         totalF.textContent = followers.size;
         totalG.textContent = following.size;
         ratioEl.textContent = (followers.size / following.size).toFixed(2);
@@ -280,10 +391,7 @@
       }
     });
 
-    // — Cleanup animation —
-    zipLabel.addEventListener('animationend', () => {
-      zipLabel.classList.remove('pop-anim');
-    });
+    zipLabel.addEventListener('animationend', () => zipLabel.classList.remove('pop-anim'));
   </script>
 </body>
 </html>
