@@ -3,7 +3,26 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Instagram Follower Analyzer</title>
+  <title>Instagram Follower Analyzer – See Who Doesn’t Follow You Back</title>
+  <meta name="description"
+        content="Upload your Instagram data ZIP and instantly discover who doesn’t follow you back, who you don’t follow, and your mutuals—all for free and in seconds.">
+  <link rel="canonical" href="https://whofollowsme.com/"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PVWHZ1JWVR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PVWHZ1JWVR', {
+      page_path: window.location.pathname,
+    });
+  </script>
+
+  <!-- Google AdSense -->
+  <script async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5094319627936586"
+          crossorigin="anonymous"></script>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -157,7 +176,7 @@
       zipInput.dispatchEvent(new Event('change'));
     });
 
-    // — Render "They Don’t Follow You" (click opens & removes) —
+    // — Render "They Don’t Follow You" (removable) —
     function renderRemovable(arr, ul, showAllBtn) {
       ul.innerHTML = '';
       if (!arr.length) {
@@ -243,15 +262,16 @@
         // store original for removable list
         origOnlyYou = onlyYou.slice();
 
-        // render each panel
+        // render panels
         renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn);
-        renderStatic(onlyThey,       listOnlyThey);
-        renderStatic(mutuals,        listMutuals);
+        renderStatic(onlyThey,         listOnlyThey);
+        renderStatic(mutuals,          listMutuals);
 
         // update stats
         totalF.textContent = followers.size;
         totalG.textContent = following.size;
         ratioEl.textContent = (followers.size / following.size).toFixed(2);
+
       } catch (err) {
         console.error(err);
         alert('Error reading that ZIP.');
