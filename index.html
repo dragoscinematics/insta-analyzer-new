@@ -1,82 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Instagram Follow Analyzer</title>
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google tag (gtag.js) -->
+  <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PVWHZ1JWVR"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
+    window.dataLayer = window.dataLayer||[];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-PVWHZ1JWVR', {
-      page_path: window.location.pathname,
-    });
+    gtag('config','G-PVWHZ1JWVR',{page_path: location.pathname});
   </script>
-
   <!-- Google AdSense loader -->
   <script async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5094319627936586"
-          crossorigin="anonymous">
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5094319627936586"
+    crossorigin="anonymous">
   </script>
-
-  <!-- JSZip via CDN -->
+  <!-- JSZip -->
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
   <style>
-    :root {
-      --insta-from: #f58529;
-    }
-    /* Flash border on ZIP upload */
-    @keyframes instaFlash {
-      0%,100% { box-shadow: 0 0 0 0 transparent; }
-      50%     { box-shadow: 0 0 20px 5px var(--insta-from); }
-    }
-    .flash-border { animation: instaFlash 1s ease-out forwards; }
-
-    /* Button “pop” on mousedown */
-    @keyframes zipPop {
-      0%,100% { transform: scale(1); }
-      50%     { transform: scale(1.2); }
-    }
-    .zip-pop { animation: zipPop 0.3s ease-out forwards; }
-
-    /* Zebra stripes & custom scrollbar */
-    .list-container {
-      max-height: 240px;
-      overflow-y: auto;
-    }
-    .list-container li:nth-child(odd)  { background: rgba(255,255,255,0.9); }
-    .list-container li:nth-child(even) { background: rgba(255,255,255,0.8); }
-    .list-container::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.3); border-radius: 4px;
-    }
+    :root { --insta-from:#f58529; }
+    @keyframes instaFlash{0%,100%{box-shadow:0}50%{box-shadow:0 0 20px 5px var(--insta-from)}}
+    .flash-border{animation:instaFlash 1s ease-out forwards;}
+    @keyframes zipPop{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+    .zip-pop{animation:zipPop .3s ease-out forwards;}
+    .list-container{max-height:240px;overflow-y:auto;}
+    .list-container li:nth-child(odd){background:rgba(255,255,255,0.9)}
+    .list-container li:nth-child(even){background:rgba(255,255,255,0.8)}
+    .list-container::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.3);border-radius:4px}
   </style>
 </head>
-<body class="min-h-screen bg-gray-900 flex flex-col overflow-auto">
+<body class="min-h-screen bg-gray-900 flex flex-col">
 
-  <!-- HEADER -->
   <header class="bg-white/10 text-white p-4 text-center">
     <h1 class="text-3xl font-bold">Instagram Follow Analyzer</h1>
   </header>
 
-  <!-- MAIN -->
-  <main class="flex-grow flex md:items-center md:justify-center items-start justify-start p-6 overflow-auto">
-    <div id="card"
-         class="relative w-full max-w-4xl bg-gradient-to-br from-purple-600 to-blue-500
-                rounded-3xl shadow-2xl p-8 space-y-8 overflow-hidden">
+  <main class="flex-grow p-6 flex md:items-center md:justify-center overflow-auto">
+    <div id="card" class="relative w-full max-w-4xl bg-gradient-to-br from-purple-600 to-blue-500
+                         rounded-3xl shadow-2xl p-8 space-y-8 overflow-hidden">
 
-      <!-- LOADING OVERLAY -->
-      <div id="loading" class="absolute inset-0 bg-black/60 hidden items-center justify-center z-20">
+      <div id="loading" class="absolute inset-0 bg-black/60 hidden flex items-center justify-center z-20">
         <div class="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
 
-      <!-- INSTRUCTIONS -->
       <section class="bg-white rounded-lg p-6 text-gray-800">
         <h2 class="text-xl font-semibold mb-2">How to get your Instagram ZIP</h2>
         <ol class="list-decimal list-inside space-y-1 text-sm">
@@ -86,23 +58,23 @@
         </ol>
       </section>
 
-      <!-- FILE UPLOAD -->
       <div class="flex justify-center">
-        <label id="zipLabel"
-               class="relative inline-block bg-white text-purple-700 font-semibold rounded-full cursor-pointer">
+        <label id="zipLabel" class="relative inline-block bg-white text-purple-700 font-semibold rounded-full cursor-pointer">
           <span class="px-8 py-4 block">Choose ZIP</span>
           <input type="file" accept=".zip" id="zipInput"
                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
         </label>
       </div>
 
-      <!-- RESULT PANELS -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Doesn’t follow you back -->
+        <!-- Panel 1 -->
         <section class="bg-white rounded-2xl p-4 text-gray-800 overflow-hidden">
           <div class="flex justify-between items-center mb-2">
             <h3 class="text-lg font-bold">Doesn’t follow you back</h3>
-            <span id="count1" class="bg-purple-700 text-white px-2 py-1 rounded-full">0</span>
+            <div class="flex items-center">
+              <span id="count1" class="bg-purple-700 text-white px-2 py-1 rounded-full">0</span>
+              <button id="showAll1" class="ml-2 text-sm text-blue-500 hidden">Show All</button>
+            </div>
           </div>
           <input type="text" id="filter1" placeholder="Search…"
                  class="w-full p-2 border rounded-lg mb-2"/>
@@ -110,11 +82,15 @@
             <li class="italic text-gray-500">None</li>
           </ul>
         </section>
-        <!-- You don’t follow back -->
+
+        <!-- Panel 2 -->
         <section class="bg-white rounded-2xl p-4 text-gray-800 overflow-hidden">
           <div class="flex justify-between items-center mb-2">
             <h3 class="text-lg font-bold">You don’t follow back</h3>
-            <span id="count2" class="bg-purple-700 text-white px-2 py-1 rounded-full">0</span>
+            <div class="flex items-center">
+              <span id="count2" class="bg-purple-700 text-white px-2 py-1 rounded-full">0</span>
+              <button id="showAll2" class="ml-2 text-sm text-blue-500 hidden">Show All</button>
+            </div>
           </div>
           <input type="text" id="filter2" placeholder="Search…"
                  class="w-full p-2 border rounded-lg mb-2"/>
@@ -126,41 +102,50 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="text-center text-white p-4">Made with ❤️</footer>
 
   <script>
-    const card     = document.getElementById('card');
-    const loading  = document.getElementById('loading');
-    const list1    = document.getElementById('list1');
-    const list2    = document.getElementById('list2');
-    const count1   = document.getElementById('count1');
-    const count2   = document.getElementById('count2');
-    const filter1  = document.getElementById('filter1');
-    const filter2  = document.getElementById('filter2');
-    const zipInput = document.getElementById('zipInput');
-    const zipLabel = document.getElementById('zipLabel');
+    const card = document.getElementById('card'),
+          loading = document.getElementById('loading'),
+          list1 = document.getElementById('list1'),
+          list2 = document.getElementById('list2'),
+          count1 = document.getElementById('count1'),
+          count2 = document.getElementById('count2'),
+          filter1 = document.getElementById('filter1'),
+          filter2 = document.getElementById('filter2'),
+          zipInput = document.getElementById('zipInput'),
+          zipLabel = document.getElementById('zipLabel'),
+          showAll1 = document.getElementById('showAll1'),
+          showAll2 = document.getElementById('showAll2');
 
-    function render(arr, ul, badge) {
+    // Render function now tracks visible count
+    function render(arr, ul, badge, showAllBtn) {
       ul.innerHTML = '';
       if (!arr.length) {
         ul.innerHTML = '<li class="italic text-gray-500">None</li>';
-      } else {
-        arr.forEach(u => {
-          const li = document.createElement('li');
-          li.className = `
-            px-3 py-1 rounded-lg transform transition
-            hover:scale-105 hover:z-10
-          `;
-          const a = document.createElement('a');
-          a.textContent = u;
-          a.href        = `https://instagram.com/${u}`;
-          a.target      = '_blank';
-          a.className   = 'block w-full';
-          ul.appendChild(li);
-          li.appendChild(a);
-        });
+        badge.textContent = '0';
+        return;
       }
+      arr.forEach(u => {
+        const li = document.createElement('li');
+        li.className = 'px-3 py-1 rounded-lg transform transition hover:scale-105 hover:z-10 cursor-pointer';
+        const a = document.createElement('a');
+        a.textContent = u;
+        a.href = `https://instagram.com/${u}`;
+        a.target = '_blank';
+        a.className = 'block w-full';
+        li.appendChild(a);
+
+        // On click, hide and decrement badge
+        li.addEventListener('click', () => {
+          li.style.display = 'none';
+          const newCount = parseInt(badge.textContent) - 1;
+          badge.textContent = newCount;
+          showAllBtn.classList.remove('hidden');
+        });
+
+        ul.appendChild(li);
+      });
       badge.textContent = arr.length;
     }
 
@@ -175,37 +160,46 @@
     setupFilter(filter1, list1);
     setupFilter(filter2, list2);
 
+    showAll1.addEventListener('click', () => {
+      Array.from(list1.children).forEach(li => li.style.display = '');
+      // reset to original count
+      count1.textContent = list1.children.length;
+      showAll1.classList.add('hidden');
+    });
+    showAll2.addEventListener('click', () => {
+      Array.from(list2.children).forEach(li => li.style.display = '');
+      count2.textContent = list2.children.length;
+      showAll2.classList.add('hidden');
+    });
+
     zipLabel.addEventListener('mousedown', () => {
       zipLabel.classList.add('zip-pop');
-      zipLabel.addEventListener('animationend', () =>
-        zipLabel.classList.remove('zip-pop'), { once: true }
-      );
+      zipLabel.addEventListener('animationend', () => zipLabel.classList.remove('zip-pop'), { once: true });
     });
 
     zipInput.addEventListener('change', async () => {
       const file = zipInput.files[0];
-      if (!file || !file.name.endsWith('.zip')) {
+      if (!file?.name.endsWith('.zip')) {
         return alert('Please select a valid Instagram ZIP.');
       }
       loading.classList.remove('hidden');
       card.classList.add('flash-border');
       try {
         const zip = await JSZip.loadAsync(file);
-        const html1 = await zip.file('connections/followers_and_following/followers_1.html')?.async('string');
-        const html2 = await zip.file('connections/followers_and_following/following.html')?.async('string');
-        if (!html1 || !html2) throw new Error();
+        const fhtml = await zip.file('connections/followers_and_following/followers_1.html')?.async('string');
+        const ghml = await zip.file('connections/followers_and_following/following.html')?.async('string');
+        if (!fhtml || !ghml) throw new Error();
 
         const parser = new DOMParser();
         const extract = html => Array.from(
           parser.parseFromString(html, 'text/html').querySelectorAll('a')
         ).map(a => a.textContent.trim()).filter(Boolean);
 
-        const followers = new Set(extract(html1));
-        const following = new Set(extract(html2));
+        const followers = new Set(extract(fhtml));
+        const following = new Set(extract(ghml));
 
-        render([...following].filter(u => !followers.has(u)), list1, count1);
-        render([...followers].filter(u => !
-followers.has(u)), list2, count2);
+        render([...following].filter(u => !followers.has(u)), list1, count1, showAll1);
+        render([...followers].filter(u => !following.has(u)), list2, count2, showAll2);
       } catch {
         alert('Error reading that ZIP.');
       } finally {
