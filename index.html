@@ -1,211 +1,268 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-gray-50">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Instagram Follower Analyzer</title>
 
-  <!-- Tailwind CSS via CDN -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Analytics (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PVWHZ1JWVR"></script>
-  <script>
-    window.dataLayer = window.dataLayer||[];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config','G-PVWHZ1JWVR',{page_path: location.pathname});
-  </script>
-  <!-- Google AdSense -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5094319627936586"
-    crossorigin="anonymous"></script>
+  <!-- Feather Icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
   <!-- JSZip -->
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
   <style>
-    :root { --insta-from:#f58529; }
-    @keyframes instaFlash{0%,100%{box-shadow:0}50%{box-shadow:0 0 20px 5px var(--insta-from)}}
-    .flash-border{animation:instaFlash 1s ease-out forwards;}
-    @keyframes zipPop{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-    .zip-pop{animation:zipPop .3s ease-out forwards;}
-    .list-container{max-height:240px;overflow-y:auto;}
-    .list-container li:nth-child(odd){background:rgba(255,255,255,0.9)}
-    .list-container li:nth-child(even){background:rgba(255,255,255,0.8)}
-    .list-container::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.3);border-radius:4px}
+    @keyframes pop { 0%,100%{transform:scale(1)}50%{transform:scale(1.1)} }
+    .pop-anim { animation: pop .2s ease-out forwards; }
   </style>
 </head>
-<body class="min-h-screen bg-gray-900 flex flex-col">
+<body class="flex flex-col h-full">
 
   <!-- HEADER -->
-  <header class="bg-white/10 text-white p-4 text-center">
-    <h1 class="text-3xl font-bold">Instagram Follower Analyzer</h1>
+  <header class="bg-gradient-to-r from-pink-500 to-yellow-400 text-white p-6 shadow-md flex items-center justify-center">
+    <i data-feather="bar-chart-2" class="w-8 h-8 mr-2"></i>
+    <h1 class="text-2xl font-bold">Instagram Follower Analyzer</h1>
   </header>
 
-  <main class="flex-grow p-6 flex md:items-center md:justify-center overflow-auto">
-    <div id="card" class="relative w-full max-w-4xl bg-gradient-to-br from-purple-600 to-blue-500
-                         rounded-3xl shadow-2xl p-8 space-y-8 overflow-hidden">
+  <!-- MAIN CARD -->
+  <main class="flex-1 flex items-center justify-center p-6">
+    <div id="card" class="w-full max-w-3xl bg-white rounded-2xl shadow-xl overflow-hidden">
 
-      <!-- LOADING -->
-      <div id="loading" class="absolute inset-0 bg-black/60 hidden flex items-center justify-center z-20">
-        <div class="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+      <!-- STATS RIBBON -->
+      <div class="grid grid-cols-3 bg-gray-100 text-center">
+        <div class="p-4 border-r">
+          <div id="totalFollowers" class="text-lg font-semibold">0</div>
+          <div class="text-xs text-gray-500">Followers</div>
+        </div>
+        <div class="p-4 border-r">
+          <div id="totalFollowing" class="text-lg font-semibold">0</div>
+          <div class="text-xs text-gray-500">Following</div>
+        </div>
+        <div class="p-4">
+          <div id="ratio" class="text-lg font-semibold">0.00</div>
+          <div class="text-xs text-gray-500">Ratio</div>
+        </div>
       </div>
 
-      <!-- UPDATED INSTRUCTIONS -->
-      <section class="bg-white rounded-lg p-6 text-gray-800">
-        <h2 class="text-xl font-semibold mb-2">How to export your Instagram data</h2>
-        <ol class="list-decimal list-inside space-y-1 text-sm">
-          <li>Open Instagram → tap the ☰ icon (three vertical bars).</li>
-          <li>Go to <strong>Accounts Center</strong> → <em>Your information and permissions</em>.</li>
-          <li>Select <strong>Download your information</strong> (or “Download or transfer information”).</li>
-          <li>Under “Some of your information,” choose <strong>Search for followers and following</strong>.</li>
-          <li>Tap <strong>Download to device</strong>.</li>
-          <li>Set <strong>Date range:</strong> All time</li>
-          <li>Choose <strong>Format:</strong> HTML</li>
-          <li>Set <strong>Media Quality:</strong> Medium</li>
-          <li>Tap <strong>Create file</strong> then wait for the ZIP email to arrive.</li>
-          <li>Download the full ZIP and upload it below.</li>
-        </ol>
-      </section>
+      <!-- TABS -->
+      <div class="border-b">
+        <nav class="-mb-px flex">
+          <button data-tab="onlyYou"
+                  class="tab-btn flex-1 py-4 text-center font-medium text-gray-600 border-b-2 border-transparent hover:text-gray-800 hover:border-gray-300">
+            They Don’t Follow You
+          </button>
+          <button data-tab="onlyThey"
+                  class="tab-btn flex-1 py-4 text-center font-medium text-gray-600 border-b-2 border-transparent hover:text-gray-800 hover:border-gray-300">
+            You Don’t Follow Back
+          </button>
+          <button data-tab="mutuals"
+                  class="tab-btn flex-1 py-4 text-center font-medium text-gray-600 border-b-2 border-transparent hover:text-gray-800 hover:border-gray-300">
+            Mutuals
+          </button>
+        </nav>
+      </div>
 
-      <!-- UPLOAD -->
-      <div class="flex justify-center">
-        <label id="zipLabel" class="relative inline-block bg-white text-purple-700 font-semibold rounded-full cursor-pointer">
-          <span class="px-8 py-4 block">Choose ZIP</span>
+      <!-- TAB CONTENTS -->
+      <div class="p-6 space-y-6">
+
+        <!-- DROPZONE -->
+        <div id="dropzone"
+             class="relative border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:border-indigo-400 transition-colors cursor-pointer">
+          <p class="text-gray-500 mb-4">Drag &amp; drop your ZIP here</p>
+          <button id="zipLabel"
+                  class="bg-indigo-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-indigo-600 transition-colors">
+            Browse ZIP
+          </button>
           <input type="file" accept=".zip" id="zipInput"
                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
-        </label>
-      </div>
+        </div>
 
-      <!-- PANELS -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Panel 1 -->
-        <section class="bg-white rounded-2xl p-4 text-gray-800 overflow-hidden">
-          <div class="flex justify-between items-center mb-2">
-            <h3 class="text-lg font-bold">Doesn’t follow you back</h3>
-            <div class="flex items-center">
-              <span id="count1" class="bg-purple-700 text-white px-2 py-1 rounded-full">0</span>
-              <button id="showAll1" class="ml-2 text-sm text-blue-500 hidden">Show All</button>
-            </div>
-          </div>
-          <input type="text" id="filter1" placeholder="Search…"
-                 class="w-full p-2 border rounded-lg mb-2"/>
-          <ul id="list1" class="list-container space-y-1">
-            <li class="italic text-gray-500">None</li>
-          </ul>
-        </section>
+        <!-- FILTER -->
+        <input id="filter"
+               placeholder="Search usernames…"
+               class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
 
-        <!-- Panel 2 -->
-        <section class="bg-white rounded-2xl p-4 text-gray-800 overflow-hidden">
-          <div class="flex justify-between items-center mb-2">
-            <h3 class="text-lg font-bold">You don’t follow back</h3>
-            <div class="flex items-center">
-              <span id="count2" class="bg-purple-700 text-white px-2 py-1 rounded-full">0</span>
-              <button id="showAll2" class="ml-2 text-sm text-blue-500 hidden">Show All</button>
-            </div>
-          </div>
-          <input type="text" id="filter2" placeholder="Search…"
-                 class="w-full p-2 border rounded-lg mb-2"/>
-          <ul id="list2" class="list-container space-y-1">
-            <li class="italic text-gray-500">None</li>
-          </ul>
-        </section>
+        <!-- PANEL: They Don’t Follow You -->
+        <div id="onlyYou" class="tab-content space-y-2">
+          <button id="showAllOnlyYou" class="hidden mb-2 text-sm text-indigo-600">
+            Show All
+          </button>
+          <ul id="listOnlyYou" class="max-h-64 overflow-y-auto space-y-1"></ul>
+        </div>
+
+        <!-- PANEL: You Don’t Follow Back -->
+        <div id="onlyThey" class="tab-content hidden space-y-2">
+          <ul id="listOnlyThey" class="max-h-64 overflow-y-auto space-y-1"></ul>
+        </div>
+
+        <!-- PANEL: Mutuals -->
+        <div id="mutuals" class="tab-content hidden space-y-2">
+          <ul id="listMutuals" class="max-h-64 overflow-y-auto space-y-1"></ul>
+        </div>
+
       </div>
     </div>
   </main>
 
-  <footer class="text-center text-white p-4">Made with ❤️</footer>
+  <!-- FOOTER -->
+  <footer class="bg-gray-100 text-gray-500 text-sm text-center p-4">
+    Made with ❤️ by You
+  </footer>
 
+  <!-- SCRIPT -->
   <script>
-    const card = document.getElementById('card'),
-          loading = document.getElementById('loading'),
-          list1 = document.getElementById('list1'),
-          list2 = document.getElementById('list2'),
-          count1 = document.getElementById('count1'),
-          count2 = document.getElementById('count2'),
-          filter1 = document.getElementById('filter1'),
-          filter2 = document.getElementById('filter2'),
-          zipInput = document.getElementById('zipInput'),
-          zipLabel = document.getElementById('zipLabel'),
-          showAll1 = document.getElementById('showAll1'),
-          showAll2 = document.getElementById('showAll2');
+    feather.replace();
 
-    function render(arr, ul, badge, showAllBtn) {
+    // Element refs
+    const zipInput       = document.getElementById('zipInput'),
+          zipLabel       = document.getElementById('zipLabel'),
+          dropzone       = document.getElementById('dropzone'),
+          filterInput    = document.getElementById('filter'),
+          listOnlyYou    = document.getElementById('listOnlyYou'),
+          listOnlyThey   = document.getElementById('listOnlyThey'),
+          listMutuals    = document.getElementById('listMutuals'),
+          totalF         = document.getElementById('totalFollowers'),
+          totalG         = document.getElementById('totalFollowing'),
+          ratioEl        = document.getElementById('ratio'),
+          showAllYouBtn  = document.getElementById('showAllOnlyYou');
+
+    // Store originals
+    let origOnlyYou = [];
+
+    // — Tabs logic —
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn')
+          .forEach(b => b.classList.remove('text-indigo-600','border-indigo-600'));
+        btn.classList.add('text-indigo-600','border-indigo-600');
+        document.querySelectorAll('.tab-content')
+          .forEach(c => c.classList.add('hidden'));
+        document.getElementById(btn.dataset.tab)
+          .classList.remove('hidden');
+        filterInput.dispatchEvent(new Event('input'));
+      });
+    });
+    document.querySelector('.tab-btn').click();
+
+    // — Drag & Drop styling —
+    ['dragenter','dragover'].forEach(e =>
+      dropzone.addEventListener(e, ev => { ev.preventDefault(); dropzone.classList.add('border-indigo-400'); })
+    );
+    ['dragleave','drop'].forEach(e =>
+      dropzone.addEventListener(e, ev => { ev.preventDefault(); dropzone.classList.remove('border-indigo-400'); })
+    );
+    dropzone.addEventListener('drop', ev => {
+      if (ev.dataTransfer.files[0]) zipInput.files = ev.dataTransfer.files;
+      zipInput.dispatchEvent(new Event('change'));
+    });
+
+    // — Render "They Don’t Follow You" (click opens & removes) —
+    function renderRemovable(arr, ul, showAllBtn) {
       ul.innerHTML = '';
       if (!arr.length) {
-        ul.innerHTML = '<li class="italic text-gray-500">None</li>';
-        badge.textContent = '0';
+        ul.innerHTML = '<li class="text-gray-400 italic">None</li>';
+        showAllBtn.classList.add('hidden');
         return;
       }
       arr.forEach(u => {
+        const url = `https://instagram.com/${u}`;
         const li = document.createElement('li');
-        li.className = 'px-3 py-1 rounded-lg transform transition hover:scale-105 hover:z-10 cursor-pointer';
-        const a = document.createElement('a');
-        a.textContent = u;
-        a.href = `https://instagram.com/${u}`;
-        a.target = '_blank';
-        a.className = 'block w-full';
-        li.appendChild(a);
+        li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center cursor-pointer';
+        li.textContent = u;
         li.addEventListener('click', () => {
-          li.style.display = 'none';
-          badge.textContent = parseInt(badge.textContent) - 1;
-          showAllBtn.classList.remove('hidden');
+          window.open(url, '_blank');
+          li.remove();
+          if (ul.children.length < arr.length) {
+            showAllBtn.classList.remove('hidden');
+          }
         });
         ul.appendChild(li);
       });
-      badge.textContent = arr.length;
+      showAllBtn.classList.add('hidden');
     }
 
-    function setupFilter(input, ul) {
-      input.addEventListener('input', () => {
-        const term = input.value.toLowerCase();
-        Array.from(ul.children).forEach(li => {
+    // — Render static lists (open only) —
+    function renderStatic(arr, ul) {
+      ul.innerHTML = '';
+      if (!arr.length) {
+        ul.innerHTML = '<li class="text-gray-400 italic">None</li>';
+        return;
+      }
+      arr.forEach(u => {
+        const url = `https://instagram.com/${u}`;
+        const li = document.createElement('li');
+        li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center cursor-pointer';
+        li.textContent = u;
+        li.addEventListener('click', () => {
+          window.open(url, '_blank');
+        });
+        ul.appendChild(li);
+      });
+    }
+
+    // — Show All handler —
+    showAllYouBtn.addEventListener('click', () => {
+      renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn);
+      filterInput.dispatchEvent(new Event('input'));
+    });
+
+    // — Filter all lists —
+    filterInput.addEventListener('input', () => {
+      const term = filterInput.value.toLowerCase();
+      [listOnlyYou, listOnlyThey, listMutuals].forEach(ul => {
+        ul.querySelectorAll('li').forEach(li => {
           li.style.display = li.textContent.toLowerCase().includes(term) ? '' : 'none';
         });
       });
-    }
-    setupFilter(filter1, list1);
-    setupFilter(filter2, list2);
-
-    showAll1.addEventListener('click', () => {
-      Array.from(list1.children).forEach(li => li.style.display = '');
-      count1.textContent = list1.children.length;
-      showAll1.classList.add('hidden');
-    });
-    showAll2.addEventListener('click', () => {
-      Array.from(list2.children).forEach(li => li.style.display = '');
-      count2.textContent = list2.children.length;
-      showAll2.classList.add('hidden');
     });
 
-    zipLabel.addEventListener('mousedown', () => {
-      zipLabel.classList.add('zip-pop');
-      zipLabel.addEventListener('animationend', () => zipLabel.classList.remove('zip-pop'), { once: true });
-    });
-
+    // — ZIP processing —
     zipInput.addEventListener('change', async () => {
       const file = zipInput.files[0];
-      if (!file?.name.endsWith('.zip')) {
+      if (!file || !file.name.endsWith('.zip')) {
         return alert('Please select a valid Instagram ZIP.');
       }
-      loading.classList.remove('hidden');
-      card.classList.add('flash-border');
+      dropzone.classList.add('opacity-50');
+      zipLabel.classList.add('pop-anim');
       try {
         const zip = await JSZip.loadAsync(file);
-        const fhtml = await zip.file('connections/followers_and_following/followers_1.html')?.async('string');
-        const ghml = await zip.file('connections/followers_and_following/following.html')?.async('string');
-        if (!fhtml || !ghml) throw new Error();
+        const f1  = await zip.file('connections/followers_and_following/followers_1.html').async('string');
+        const f2  = await zip.file('connections/followers_and_following/following.html').async('string');
         const parser = new DOMParser();
         const extract = html => Array.from(
           parser.parseFromString(html,'text/html').querySelectorAll('a')
-        ).map(a=>a.textContent.trim()).filter(Boolean);
-        const followers = new Set(extract(fhtml)),
-              following = new Set(extract(ghml));
-        render([...following].filter(u=>!followers.has(u)), list1, count1, showAll1);
-        render([...followers].filter(u=>!following.has(u)), list2, count2, showAll2);
-      } catch {
+        ).map(a => a.textContent.trim()).filter(Boolean);
+
+        const followers = new Set(extract(f1)),
+              following = new Set(extract(f2)),
+              onlyYou   = [...following].filter(u => !followers.has(u)),
+              onlyThey  = [...followers].filter(u => !following.has(u)),
+              mutuals   = [...followers].filter(u => following.has(u));
+
+        // store original for removable list
+        origOnlyYou = onlyYou.slice();
+
+        // render each panel
+        renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn);
+        renderStatic(onlyThey,       listOnlyThey);
+        renderStatic(mutuals,        listMutuals);
+
+        // update stats
+        totalF.textContent = followers.size;
+        totalG.textContent = following.size;
+        ratioEl.textContent = (followers.size / following.size).toFixed(2);
+      } catch (err) {
+        console.error(err);
         alert('Error reading that ZIP.');
       } finally {
-        loading.classList.add('hidden');
+        dropzone.classList.remove('opacity-50');
       }
+    });
+
+    // — Cleanup animation —
+    zipLabel.addEventListener('animationend', () => {
+      zipLabel.classList.remove('pop-anim');
     });
   </script>
 </body>
