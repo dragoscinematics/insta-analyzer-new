@@ -313,63 +313,72 @@
     }
 
     function renderRemovable(arr, ul, btn, badge) {
-      ul.innerHTML = '';
-      if (!arr.length) {
-        ul.innerHTML = '<li class="italic text-gray-400">None</li>';
-        badge.textContent = 0;
-        btn.classList.add('hidden');
-        return;
-      }
-      arr.forEach(u => {
-        const url = `https://instagram.com/${u}`,
-              li  = document.createElement('li'),
-              a   = document.createElement('a');
-        li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center cursor-pointer';
-        a.textContent = u;
-        a.href       = url;
-        a.target     = '_blank';
-        a.rel        = 'noopener';
-        a.className  = 'flex-1';
-        // clicking the link alone opens Instagram
-        a.addEventListener('click', e => e.stopPropagation());
-        // clicking the list item removes it afterwards
-        li.addEventListener('click', () => {
-          window.open(url, '_blank');
-          li.remove();
-          updateCount(badge, ul);
-          if (ul.children.length < arr.length) btn.classList.remove('hidden');
-        });
-        li.appendChild(a);
-        ul.appendChild(li);
-      });
+  ul.innerHTML = '';
+  if (!arr.length) {
+    ul.innerHTML = '<li class="italic text-gray-400">None</li>';
+    badge.textContent = 0;
+    btn.classList.add('hidden');
+    return;
+  }
+  arr.forEach(u => {
+    const url = `https://instagram.com/${u}`,
+          li  = document.createElement('li'),
+          a   = document.createElement('a');
+
+    li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center';
+    a.textContent = u;
+    a.href       = url;
+    a.target     = '_blank';
+    a.rel        = 'noopener';
+    a.className  = 'flex-1';
+
+    // when you click the link, open + remove + update count
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      window.open(url, '_blank');
+      li.remove();
       updateCount(badge, ul);
-      btn.classList.add('hidden');
-    }
+      if (ul.children.length < arr.length) btn.classList.remove('hidden');
+    });
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  updateCount(badge, ul);
+  btn.classList.add('hidden');
+}
 
     function renderStatic(arr, ul, badge) {
-      ul.innerHTML = '';
-      if (!arr.length) {
-        ul.innerHTML = '<li class="italic text-gray-400">None</li>';
-        badge.textContent = 0;
-        return;
-      }
-      arr.forEach(u => {
-        const url = `https://instagram.com/${u}`,
-              li  = document.createElement('li'),
-              a   = document.createElement('a');
-        li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center cursor-pointer';
-        a.textContent = u;
-        a.href       = url;
-        a.target     = '_blank';
-        a.rel        = 'noopener';
-        a.className  = 'flex-1';
-        a.addEventListener('click', e => e.stopPropagation());
-        li.addEventListener('click', () => window.open(url, '_blank'));
-        li.appendChild(a);
-        ul.appendChild(li);
-      });
-      updateCount(badge, ul);
-    }
+  ul.innerHTML = '';
+  if (!arr.length) {
+    ul.innerHTML = '<li class="italic text-gray-400">None</li>';
+    badge.textContent = 0;
+    return;
+  }
+  arr.forEach(u => {
+    const url = `https://instagram.com/${u}`,
+          li  = document.createElement('li'),
+          a   = document.createElement('a');
+
+    li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center';
+    a.textContent = u;
+    a.href       = url;
+    a.target     = '_blank';
+    a.rel        = 'noopener';
+    a.className  = 'flex-1';
+
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      window.open(url, '_blank');
+    });
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  updateCount(badge, ul);
+}
 
     showAllYouBtn.addEventListener('click', () => {
       renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn, countOnlyYou);
