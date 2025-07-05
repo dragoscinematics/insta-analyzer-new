@@ -67,7 +67,7 @@
             "name": "How do I download my Instagram data?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "In the Instagram app tap ☰ → Settings → Security → Download Data. Select 'Followers & Following,' choose 'All time,' enter your email, and request the download."
+              "text": "See the detailed step-by-step guide in the 'How to download your Instagram data' section above."
             }
           }
         ]
@@ -81,28 +81,55 @@
           {
             "@type": "HowToStep",
             "url": "https://whofollowsme.com/#step1",
-            "name": "Open the Instagram app and go to Settings → Security → Download Data",
+            "name": "Open the Instagram app and go to Accounts Center",
             "itemListElement": {
               "@type": "HowToDirection",
-              "text": "Tap Download Data and select 'Followers & Following'"
+              "text": "Tap ☰ → Accounts Center"
             }
           },
           {
             "@type": "HowToStep",
             "url": "https://whofollowsme.com/#step2",
-            "name": "Choose 'All time' and enter your email",
+            "name": "Your information and permissions",
             "itemListElement": {
               "@type": "HowToDirection",
-              "text": "Tap Request Download"
+              "text": "Select Your information and permissions → Download your information"
             }
           },
           {
             "@type": "HowToStep",
             "url": "https://whofollowsme.com/#step3",
-            "name": "Wait for the email and download the ZIP",
+            "name": "Download or transfer information",
             "itemListElement": {
               "@type": "HowToDirection",
-              "text": "Upload the ZIP here to analyze"
+              "text": "Tap Download or transfer information → Some of your information"
+            }
+          },
+          {
+            "@type": "HowToStep",
+            "url": "https://whofollowsme.com/#step4",
+            "name": "Followers and following",
+            "itemListElement": {
+              "@type": "HowToDirection",
+              "text": "Search for Followers and following → Download to device"
+            }
+          },
+          {
+            "@type": "HowToStep",
+            "url": "https://whofollowsme.com/#step5",
+            "name": "Set options & create files",
+            "itemListElement": {
+              "@type": "HowToDirection",
+              "text": "Date range: All time; Format: HTML; Media Quality: Medium; Tap Create files"
+            }
+          },
+          {
+            "@type": "HowToStep",
+            "url": "https://whofollowsme.com/#step6",
+            "name": "Wait & upload ZIP",
+            "itemListElement": {
+              "@type": "HowToDirection",
+              "text": "Once ZIP arrives by email (up to 48 hrs), upload it here"
             }
           }
         ]
@@ -167,17 +194,37 @@
         </nav>
       </div>
 
+      <!-- DOWNLOAD INSTRUCTIONS -->
+      <section class="bg-white rounded-lg p-6 text-gray-800 space-y-3" id="how-to">
+        <h2 class="text-xl font-semibold">How to download your Instagram data</h2>
+        <ol class="list-decimal list-inside text-sm space-y-1">
+          <li>Open Instagram app → tap ☰ → <strong>Accounts Center</strong></li>
+          <li>Tap <em>Your information and permissions</em> → <em>Download your information</em></li>
+          <li>Choose <em>Download or transfer information</em> → <em>Some of your information</em></li>
+          <li>Search for <strong>Followers and following</strong> → <strong>Download to device</strong></li>
+          <li>Set Date range to <strong>All time</strong></li>
+          <li>Format: <strong>HTML</strong>, Media Quality: <strong>Medium</strong></li>
+          <li>Tap <strong>Create files</strong> and wait (up to 48 hrs) for the ZIP by email</li>
+          <li>When you receive it, upload the full ZIP below to analyze</li>
+        </ol>
+      </section>
+
       <!-- PANEL CONTENTS -->
       <div class="p-6 space-y-6">
         <!-- Upload + Filter -->
-        <div id="dropzone" class="relative border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:border-indigo-400 transition-colors cursor-pointer">
+        <div id="dropzone"
+             class="relative border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:border-indigo-400 transition-colors cursor-pointer">
           <p class="text-gray-500 mb-4">Drag &amp; drop your ZIP here</p>
-          <button id="zipLabel" class="bg-indigo-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-indigo-600 transition-colors">
+          <button id="zipLabel"
+                  class="bg-indigo-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-indigo-600 transition-colors">
             Browse ZIP
           </button>
-          <input type="file" accept=".zip" id="zipInput" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
+          <input type="file" accept=".zip" id="zipInput"
+                 class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
         </div>
-        <input id="filter" placeholder="Search usernames…" class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+        <input id="filter"
+               placeholder="Search usernames…"
+               class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
 
         <!-- They Don’t Follow You -->
         <div id="onlyYou" class="tab-content space-y-2">
@@ -210,30 +257,26 @@
     </div>
   </main>
 
-  <!-- FAQ & Privacy -->
-  <section class="bg-white rounded-lg shadow-md max-w-3xl mx-auto p-6 mb-8">
-    <h2 id="faq" class="text-xl font-semibold mb-4">FAQs</h2>
+  <!-- FAQ -->
+  <section class="bg-white rounded-lg shadow-md max-w-3xl mx-auto p-6 mb-8" id="faq">
+    <h2 class="text-xl font-semibold mb-4">FAQs</h2>
     <div class="space-y-4">
       <div>
         <h3 class="font-medium">Who follows me on Instagram?</h3>
         <p class="text-gray-700">
-          Upload your Instagram data ZIP and our tool parses your followers list 
-          so you can instantly see exactly who follows you.
+          Upload your Instagram data ZIP and our tool parses your followers list so you can instantly see exactly who follows you.
         </p>
       </div>
       <div>
         <h3 class="font-medium">Does this tool store my data?</h3>
         <p class="text-gray-700">
-          No—everything runs <strong>100% in your browser</strong>. We never send, store, 
-          or capture any of your Instagram data on our servers.
+          No—everything runs <strong>100% in your browser</strong>. We never send, store, or capture any of your Instagram data on our servers.
         </p>
       </div>
       <div>
         <h3 class="font-medium">How do I download my Instagram data?</h3>
         <p class="text-gray-700">
-          In the Instagram app tap ☰ → Settings → Security → Download Data.  
-          Select “Followers &amp; Following,” choose “All time,” enter your email,  
-          and request the download. Once you get the ZIP by email, upload it here.
+          See the “How to download your Instagram data” section above for the full, step-by-step instructions.
         </p>
       </div>
     </div>
@@ -279,15 +322,24 @@
       }
       arr.forEach(u => {
         const url = `https://instagram.com/${u}`,
-              li  = document.createElement('li');
+              li  = document.createElement('li'),
+              a   = document.createElement('a');
         li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center cursor-pointer';
-        li.textContent = u;
+        a.textContent = u;
+        a.href       = url;
+        a.target     = '_blank';
+        a.rel        = 'noopener';
+        a.className  = 'flex-1';
+        // clicking the link alone opens Instagram
+        a.addEventListener('click', e => e.stopPropagation());
+        // clicking the list item removes it afterwards
         li.addEventListener('click', () => {
           window.open(url, '_blank');
           li.remove();
           updateCount(badge, ul);
           if (ul.children.length < arr.length) btn.classList.remove('hidden');
         });
+        li.appendChild(a);
         ul.appendChild(li);
       });
       updateCount(badge, ul);
@@ -303,10 +355,17 @@
       }
       arr.forEach(u => {
         const url = `https://instagram.com/${u}`,
-              li  = document.createElement('li');
+              li  = document.createElement('li'),
+              a   = document.createElement('a');
         li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center cursor-pointer';
-        li.textContent = u;
+        a.textContent = u;
+        a.href       = url;
+        a.target     = '_blank';
+        a.rel        = 'noopener';
+        a.className  = 'flex-1';
+        a.addEventListener('click', e => e.stopPropagation());
         li.addEventListener('click', () => window.open(url, '_blank'));
+        li.appendChild(a);
         ul.appendChild(li);
       });
       updateCount(badge, ul);
@@ -357,7 +416,7 @@
     // ZIP processing
     zipInput.addEventListener('change', async () => {
       const file = zipInput.files[0];
-      if (!file || !file.name.endsWith('.zip')) return alert('Please select a valid Instagram ZIP.');
+      if (!file||!file.name.endsWith('.zip')) return alert('Please select a valid Instagram ZIP.');
       dropzone.classList.add('opacity-50');
       zipLabel.classList.add('pop-anim');
       try {
@@ -365,7 +424,9 @@
               html1  = await zip.file('connections/followers_and_following/followers_1.html').async('string'),
               html2  = await zip.file('connections/followers_and_following/following.html').async('string'),
               parser = new DOMParser(),
-              extract= html => Array.from(parser.parseFromString(html,'text/html').querySelectorAll('a')).map(a=>a.textContent.trim()).filter(Boolean);
+              extract= html => Array.from(
+                parser.parseFromString(html,'text/html').querySelectorAll('a')
+              ).map(a=>a.textContent.trim()).filter(Boolean);
 
         const followers = new Set(extract(html1)),
               following = new Set(extract(html2)),
@@ -374,7 +435,6 @@
               mutuals   = [...followers].filter(u => following.has(u));
 
         origOnlyYou = onlyYou.slice();
-
         renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn, countOnlyYou);
         renderStatic(onlyThey,       listOnlyThey, countOnlyThey);
         renderStatic(mutuals,        listMutuals,  countMutuals);
