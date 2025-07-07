@@ -8,6 +8,9 @@
         content="Upload your Instagram data ZIP and instantly discover who follows you, who doesn’t follow back, and your mutuals—100% in your browser, free and secure.">
   <link rel="canonical" href="https://whofollowsme.com/"/>
 
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" />
+
   <!-- Open Graph -->
   <meta property="og:type"        content="website"/>
   <meta property="og:title"       content="Who Follows Me on Instagram? • Instagram Follower Analyzer"/>
@@ -78,67 +81,19 @@
         "name": "How to get your Instagram data ZIP",
         "description": "Step-by-step on requesting your Instagram followers & following data from the mobile app",
         "step": [
-          {
-            "@type": "HowToStep",
-            "url": "https://whofollowsme.com/#step1",
-            "name": "Open the Instagram app and go to Accounts Center",
-            "itemListElement": {
-              "@type": "HowToDirection",
-              "text": "Tap ☰ → Accounts Center"
-            }
-          },
-          {
-            "@type": "HowToStep",
-            "url": "https://whofollowsme.com/#step2",
-            "name": "Your information and permissions",
-            "itemListElement": {
-              "@type": "HowToDirection",
-              "text": "Select Your information and permissions → Download your information"
-            }
-          },
-          {
-            "@type": "HowToStep",
-            "url": "https://whofollowsme.com/#step3",
-            "name": "Download or transfer information",
-            "itemListElement": {
-              "@type": "HowToDirection",
-              "text": "Tap Download or transfer information → Some of your information"
-            }
-          },
-          {
-            "@type": "HowToStep",
-            "url": "https://whofollowsme.com/#step4",
-            "name": "Followers and following",
-            "itemListElement": {
-              "@type": "HowToDirection",
-              "text": "Search for Followers and following → Download to device"
-            }
-          },
-          {
-            "@type": "HowToStep",
-            "url": "https://whofollowsme.com/#step5",
-            "name": "Set options & create files",
-            "itemListElement": {
-              "@type": "HowToDirection",
-              "text": "Date range: All time; Format: HTML; Media Quality: Medium; Tap Create files"
-            }
-          },
-          {
-            "@type": "HowToStep",
-            "url": "https://whofollowsme.com/#step6",
-            "name": "Wait & upload ZIP",
-            "itemListElement": {
-              "@type": "HowToDirection",
-              "text": "Once ZIP arrives by email (up to 48 hrs), upload it here"
-            }
-          }
+          {"@type":"HowToStep","url":"#step1","name":"Open the Instagram app and go to Accounts Center","itemListElement":{"@type":"HowToDirection","text":"Tap ☰ → Accounts Center"}},
+          {"@type":"HowToStep","url":"#step2","name":"Your information and permissions","itemListElement":{"@type":"HowToDirection","text":"Select Your information and permissions → Download your information"}},
+          {"@type":"HowToStep","url":"#step3","name":"Download or transfer information","itemListElement":{"@type":"HowToDirection","text":"Tap Download or transfer information → Some of your information"}},
+          {"@type":"HowToStep","url":"#step4","name":"Followers and following","itemListElement":{"@type":"HowToDirection","text":"Search for Followers and following → Download to device"}},
+          {"@type":"HowToStep","url":"#step5","name":"Set options & create files","itemListElement":{"@type":"HowToDirection","text":"Date range: All time; Format: HTML; Media Quality: Medium; Tap Create files"}},
+          {"@type":"HowToStep","url":"#step6","name":"Wait & upload ZIP","itemListElement":{"@type":"HowToDirection","text":"Once ZIP arrives by email (up to 48 hrs), upload it here"}}
         ]
       }
     ]
   }
   </script>
 
-  <!-- Tailwind CSS, Feather Icons, JSZip -->
+  <!-- Tailwind, Feather Icons, JSZip -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/feather-icons"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
@@ -179,35 +134,42 @@
       <!-- TABS -->
       <div class="border-b">
         <nav class="-mb-px flex">
-          <button data-tab="onlyYou"
-                  class="tab-btn flex-1 py-4 text-center font-medium text-gray-600 border-b-2 border-transparent hover:text-gray-800 hover:border-gray-300">
+          <button data-tab="onlyYou" class="tab-btn flex-1 py-4 text-center font-medium text-gray-600 border-b-2 border-transparent hover:text-gray-800 hover:border-gray-300">
             They Don’t Follow You
           </button>
-          <button data-tab="onlyThey"
-                  class="tab-btn flex-1 py-4 text-center font-medium text-gray-600 border-b-2 border-transparent hover:text-gray-800 hover:border-gray-300">
+          <button data-tab="onlyThey" class="tab-btn flex-1 py-4 text-center font-medium text-gray-600 border-b-2 border-transparent hover:text-gray-800 hover:border-gray-300">
             You Don’t Follow Back
           </button>
-          <button data-tab="mutuals"
-                  class="tab-btn flex-1 py-4 text-center font-medium text-gray-600 border-b-2 border-transparent hover:text-gray-800 hover:border-gray-300">
+          <button data-tab="mutuals" class="tab-btn flex-1 py-4 text-center font-medium text-gray-600 border-b-2 border-transparent hover:text-gray-800 hover:border-gray-300">
             Mutuals
           </button>
         </nav>
       </div>
 
       <!-- DOWNLOAD INSTRUCTIONS -->
-      <section class="bg-white rounded-lg p-6 text-gray-800 space-y-3" id="how-to">
-        <h2 class="text-xl font-semibold">How to download your Instagram data</h2>
-        <ol class="list-decimal list-inside text-sm space-y-1">
-          <li>Open Instagram app → tap ☰ → <strong>Accounts Center</strong></li>
-          <li>Tap <em>Your information and permissions</em> → <em>Download your information</em></li>
-          <li>Choose <em>Download or transfer information</em> → <em>Some of your information</em></li>
-          <li>Search for <strong>Followers and following</strong> → <strong>Download to device</strong></li>
-          <li>Set Date range to <strong>All time</strong></li>
-          <li>Format: <strong>HTML</strong>, Media Quality: <strong>Medium</strong></li>
-          <li>Tap <strong>Create files</strong> and wait (up to 48 hrs) for the ZIP by email</li>
-          <li>When you receive it, upload the full ZIP below to analyze</li>
-        </ol>
-      </section>
+<section class="bg-white rounded-lg p-6 text-gray-800 space-y-3" id="how-to">
+  <h2 class="text-xl font-semibold">How to download your Instagram data</h2>
+  <ol class="list-decimal list-inside text-sm space-y-1">
+    <li>Open Instagram app → tap ☰ → <strong>Accounts Center</strong></li>
+    <li>Tap <em>Your information and permissions</em> → <em>Download your information</em></li>
+    <li>Choose <em>Download or transfer information</em> → <em>Some of your information</em></li>
+    <li>Search for <strong>Followers and following</strong> → <strong>Download to device</strong></li>
+    <li>Set Date range to <strong>All time</strong></li>
+    <li>Format: <strong>HTML</strong>, Media Quality: <strong>Medium</strong></li>
+    <li>Tap <strong>Create files</strong> and wait (up to 48 hrs) for the ZIP by email</li>
+    <li>When you receive the ZIP, upload it here to analyze</li>
+  </ol>
+  <div class="mt-4 text-center">
+    <a
+      href="https://accountscenter.instagram.com/info_and_permissions/dyi/?entry_point=deeplink_screen"
+      target="_blank"
+      rel="noopener"
+      class="inline-block bg-indigo-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-indigo-600 transition-colors"
+    >
+      Download Your Instagram Data
+    </a>
+  </div>
+</section>
 
       <!-- PANEL CONTENTS -->
       <div class="p-6 space-y-6">
@@ -222,8 +184,7 @@
           <input type="file" accept=".zip" id="zipInput"
                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
         </div>
-        <input id="filter"
-               placeholder="Search usernames…"
+        <input id="filter" placeholder="Search usernames…"
                class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
 
         <!-- They Don’t Follow You -->
@@ -290,7 +251,7 @@
   <script>
     feather.replace();
 
-    // Refs
+    // Element refs
     const zipInput      = document.getElementById('zipInput'),
           zipLabel      = document.getElementById('zipLabel'),
           dropzone      = document.getElementById('dropzone'),
@@ -308,88 +269,86 @@
 
     let origOnlyYou = [];
 
+    // Updates badge count
     function updateCount(badge, ul) {
       badge.textContent = ul.querySelectorAll('li').length;
     }
 
+    // Render "They Don’t Follow You" (removable)
     function renderRemovable(arr, ul, btn, badge) {
-  ul.innerHTML = '';
-  if (!arr.length) {
-    ul.innerHTML = '<li class="italic text-gray-400">None</li>';
-    badge.textContent = 0;
-    btn.classList.add('hidden');
-    return;
-  }
-  arr.forEach(u => {
-    const url = `https://instagram.com/${u}`,
-          li  = document.createElement('li'),
-          a   = document.createElement('a');
-
-    li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center';
-    a.textContent = u;
-    a.href       = url;
-    a.target     = '_blank';
-    a.rel        = 'noopener';
-    a.className  = 'flex-1';
-
-    // when you click the link, open + remove + update count
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      window.open(url, '_blank');
-      li.remove();
+      ul.innerHTML = '';
+      if (!arr.length) {
+        ul.innerHTML = '<li class="italic text-gray-400">None</li>';
+        badge.textContent = 0;
+        btn.classList.add('hidden');
+        return;
+      }
+      arr.forEach(u => {
+        const url = `https://instagram.com/${u}`,
+              li  = document.createElement('li'),
+              a   = document.createElement('a');
+        li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center';
+        a.textContent = u;
+        a.href       = url;
+        a.target     = '_blank';
+        a.rel        = 'noopener';
+        a.className  = 'flex-1';
+        // Click link → open in new tab, remove item, update count
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          window.open(url, '_blank');
+          li.remove();
+          updateCount(badge, ul);
+          if (ul.children.length < arr.length) btn.classList.remove('hidden');
+        });
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
       updateCount(badge, ul);
-      if (ul.children.length < arr.length) btn.classList.remove('hidden');
-    });
+      btn.classList.add('hidden');
+    }
 
-    li.appendChild(a);
-    ul.appendChild(li);
-  });
-
-  updateCount(badge, ul);
-  btn.classList.add('hidden');
-}
-
+    // Render static lists
     function renderStatic(arr, ul, badge) {
-  ul.innerHTML = '';
-  if (!arr.length) {
-    ul.innerHTML = '<li class="italic text-gray-400">None</li>';
-    badge.textContent = 0;
-    return;
-  }
-  arr.forEach(u => {
-    const url = `https://instagram.com/${u}`,
-          li  = document.createElement('li'),
-          a   = document.createElement('a');
+      ul.innerHTML = '';
+      if (!arr.length) {
+        ul.innerHTML = '<li class="italic text-gray-400">None</li>';
+        badge.textContent = 0;
+        return;
+      }
+      arr.forEach(u => {
+        const url = `https://instagram.com/${u}`,
+              li  = document.createElement('li'),
+              a   = document.createElement('a');
+        li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center';
+        a.textContent = u;
+        a.href       = url;
+        a.target     = '_blank';
+        a.rel        = 'noopener';
+        a.className  = 'flex-1';
+        // Click anywhere opens in new tab
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          window.open(url, '_blank');
+        });
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      updateCount(badge, ul);
+    }
 
-    li.className = 'p-3 bg-gray-50 rounded hover:bg-indigo-50 transition flex items-center';
-    a.textContent = u;
-    a.href       = url;
-    a.target     = '_blank';
-    a.rel        = 'noopener';
-    a.className  = 'flex-1';
-
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      window.open(url, '_blank');
-    });
-
-    li.appendChild(a);
-    ul.appendChild(li);
-  });
-
-  updateCount(badge, ul);
-}
-
+    // "Show All" handler
     showAllYouBtn.addEventListener('click', () => {
       renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn, countOnlyYou);
       filterInput.dispatchEvent(new Event('input'));
     });
 
+    // Filter across all lists
     filterInput.addEventListener('input', () => {
       const term = filterInput.value.toLowerCase();
       [listOnlyYou, listOnlyThey, listMutuals].forEach(ul => {
         ul.querySelectorAll('li').forEach(li => {
-          li.style.display = li.textContent.toLowerCase().includes(term) ? '' : 'none';
+          li.style.display = li.textContent.toLowerCase().includes(term)? '' : 'none';
         });
       });
       updateCount(countOnlyYou, listOnlyYou);
@@ -397,7 +356,7 @@
       updateCount(countMutuals, listMutuals);
     });
 
-    // Tabs
+    // Tabs logic
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-btn')
@@ -408,24 +367,32 @@
         filterInput.dispatchEvent(new Event('input'));
       });
     });
+    // Activate first tab
     document.querySelector('.tab-btn').click();
 
     // Drag & drop styling
-    ['dragenter','dragover'].forEach(e =>
-      dropzone.addEventListener(e, ev => { ev.preventDefault(); dropzone.classList.add('border-indigo-400'); })
-    );
-    ['dragleave','drop'].forEach(e =>
-      dropzone.addEventListener(e, ev => { ev.preventDefault(); dropzone.classList.remove('border-indigo-400'); })
-    );
-    dropzone.addEventListener('drop', ev => {
-      if (ev.dataTransfer.files[0]) zipInput.files = ev.dataTransfer.files;
+    ['dragenter','dragover'].forEach(evt=>{
+      dropzone.addEventListener(evt, e=>{
+        e.preventDefault();
+        dropzone.classList.add('border-indigo-400');
+      });
+    });
+    ['dragleave','drop'].forEach(evt=>{
+      dropzone.addEventListener(evt, e=>{
+        e.preventDefault();
+        dropzone.classList.remove('border-indigo-400');
+      });
+    });
+    dropzone.addEventListener('drop', e=>{
+      if(e.dataTransfer.files[0]) zipInput.files = e.dataTransfer.files;
       zipInput.dispatchEvent(new Event('change'));
     });
 
-    // ZIP processing
-    zipInput.addEventListener('change', async () => {
+    // Process ZIP
+    zipInput.addEventListener('change', async ()=>{
       const file = zipInput.files[0];
-      if (!file||!file.name.endsWith('.zip')) return alert('Please select a valid Instagram ZIP.');
+      if(!file||!file.name.endsWith('.zip'))
+        return alert('Please select a valid Instagram ZIP.');
       dropzone.classList.add('opacity-50');
       zipLabel.classList.add('pop-anim');
       try {
@@ -439,9 +406,9 @@
 
         const followers = new Set(extract(html1)),
               following = new Set(extract(html2)),
-              onlyYou   = [...following].filter(u => !followers.has(u)),
-              onlyThey  = [...followers].filter(u => !following.has(u)),
-              mutuals   = [...followers].filter(u => following.has(u));
+              onlyYou   = [...following].filter(u=>!followers.has(u)),
+              onlyThey  = [...followers].filter(u=>!following.has(u)),
+              mutuals   = [...followers].filter(u=>following.has(u));
 
         origOnlyYou = onlyYou.slice();
         renderRemovable(origOnlyYou, listOnlyYou, showAllYouBtn, countOnlyYou);
@@ -450,9 +417,9 @@
 
         totalF.textContent = followers.size;
         totalG.textContent = following.size;
-        ratioEl.textContent = (followers.size / following.size).toFixed(2);
+        ratioEl.textContent = (followers.size/following.size).toFixed(2);
 
-      } catch (err) {
+      } catch(err) {
         console.error(err);
         alert('Error reading that ZIP.');
       } finally {
@@ -460,10 +427,8 @@
       }
     });
 
-    zipLabel.addEventListener('animationend', () => zipLabel.classList.remove('pop-anim'));
+    // Cleanup animation
+    zipLabel.addEventListener('animationend', ()=>zipLabel.classList.remove('pop-anim'));
   </script>
 </body>
 </html>
-< ! - -   r e b u i l d :   0 7 / 0 6 / 2 0 2 5   2 0 : 4 0 : 2 5   - - >  
- < ! - -   r e b u i l d :   0 7 / 0 6 / 2 0 2 5   2 0 : 4 4 : 5 9   - - >  
- 
