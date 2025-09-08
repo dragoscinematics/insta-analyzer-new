@@ -1,0 +1,11 @@
+url: "https://whofollowsme.com"
+baseurl: ""
+enforce_ssl: whofollowsme.com
+
+# GitHub Pages settings
+github:
+  repository_url: https://github.com/dragoscinematics/insta-analyzer-new
+
+# SEO settings
+title: "Instagram Follower Analyzer - Who Follows Me"
+description: "Free Instagram follower analyzer tool to see who doesn't follow you back, find ghost followers, and analyze mutual followers. 100% private and secure."

@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
+Crawl-delay: 1
+
+# Block GitHub Pages URLs to prevent duplicate indexing
+User-agent: *
+Disallow: /dragoscinematics.github.io/
 
 Sitemap: https://whofollowsme.com/sitemap.xml
+
+# Preferred domain
+Host: whofollowsme.com
