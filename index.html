@@ -38,6 +38,10 @@
     gtag('config', 'G-PVWHZ1JWVR', { page_path: window.location.pathname });
   </script>
 
+  <!-- Google AdSense -->
+  <script async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5094319627936586"
+          crossorigin="anonymous"></script>
 
   <!-- Enhanced SEO Structured Data -->
   <script type="application/ld+json">
@@ -127,6 +131,7 @@
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
   
   <!-- Tailwind, Feather Icons, JSZip -->
   <script src="https://cdn.tailwindcss.com" defer></script>
@@ -213,6 +218,16 @@
     >
       Download Your Instagram Data
     </a>
+  </div>
+
+  <!-- Top Ad - Non-intrusive banner -->
+  <div class="max-w-3xl mx-auto my-4">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-5094319627936586"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
   </div>
 </section>
 
@@ -327,6 +342,16 @@
     </div>
   </section>
 
+  <!-- Middle Ad - Between content sections -->
+  <div class="max-w-3xl mx-auto my-6">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-5094319627936586"
+         data-ad-slot="9876543210"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
   <!-- FAQ -->
   <section class="bg-white rounded-lg shadow-md max-w-3xl mx-auto p-6 mb-8" id="faq">
     <h2 class="text-xl font-semibold mb-4">Frequently Asked Questions About Instagram Follower Analysis</h2>
@@ -375,6 +400,16 @@
       </div>
     </div>
   </section>
+
+  <!-- Bottom Ad - Before footer -->
+  <div class="max-w-3xl mx-auto my-6">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-5094319627936586"
+         data-ad-slot="5555555555"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
 
   <!-- FOOTER -->
   <footer class="bg-gray-100 text-gray-500 text-sm text-center p-4">
@@ -578,6 +613,17 @@
 
     // Cleanup animation
     zipLabel.addEventListener('animationend', ()=>zipLabel.classList.remove('pop-anim'));
+
+    // Initialize ads after page loads
+    window.addEventListener('load', function() {
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.log('AdSense loading...');
+      }
+    });
   </script>
 </body>
 </html>
