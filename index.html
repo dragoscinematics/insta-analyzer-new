@@ -38,10 +38,6 @@
     gtag('config', 'G-PVWHZ1JWVR', { page_path: window.location.pathname });
   </script>
 
-  <!-- Google AdSense -->
-  <script async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5094319627936586"
-          crossorigin="anonymous"></script>
 
   <!-- Enhanced SEO Structured Data -->
   <script type="application/ld+json">
@@ -131,7 +127,6 @@
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://www.googletagmanager.com">
-  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
   
   <!-- Tailwind, Feather Icons, JSZip -->
   <script src="https://cdn.tailwindcss.com" defer></script>
@@ -534,9 +529,25 @@
       dropzone.classList.add('opacity-50');
       zipLabel.classList.add('pop-anim');
       try {
-        const zip    = await JSZip.loadAsync(file),
-              html1  = await zip.file('connections/followers_and_following/followers_1.html').async('string'),
-              html2  = await zip.file('connections/followers_and_following/following.html').async('string'),
+        const zip = await JSZip.loadAsync(file);
+        
+        // Try to find followers file with various possible names
+        let followersFile = zip.file('connections/followers_and_following/followers_1.html') ||
+                           zip.file('connections/followers_and_following/followers.html') ||
+                           zip.file('followers_and_following/followers_1.html') ||
+                           zip.file('followers_and_following/followers.html');
+        
+        // Try to find following file with various possible names                   
+        let followingFile = zip.file('connections/followers_and_following/following.html') ||
+                           zip.file('followers_and_following/following.html');
+        
+        if (!followersFile || !followingFile) {
+          alert('Could not find followers/following files in ZIP. Please make sure you downloaded the correct Instagram data with "Followers and following" selected.');
+          return;
+        }
+        
+        const html1  = await followersFile.async('string'),
+              html2  = await followingFile.async('string'),
               parser = new DOMParser(),
               extract= html => Array.from(
                 parser.parseFromString(html,'text/html').querySelectorAll('a')
